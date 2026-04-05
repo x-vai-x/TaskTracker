@@ -4,6 +4,16 @@
 
 <header>
 	<h1 class="text-center">Task Management</h1>
+	@php
+		@$alertType = null;
+		if ($success !== -1) {
+			$alertType = $success ? "success" : "danger";
+		}
+    
+	@endphp
+	@if ($alertType)
+		<x-alert type="{{ $alertType }}">{{ $message }}</x-alert>
+	@endif
 </header>
 <main>
 	<div>

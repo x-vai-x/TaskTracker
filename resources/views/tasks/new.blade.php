@@ -42,15 +42,12 @@
 			</div>
 			<div class="mb-3">
 				<label class="form-label">Status</label>
-				<select 
+				<x-dropdown 
+					label="Status" 
 					name="status" 
-					class="form-select @error('status') is-invalid @enderror"
-				>
-					<option value="">Select status</option>
-					<option value="PENDING">PENDING</option>
-					<option value="NON COMPLIANT">NON COMPLIANT</option>
-					<option value="COMPLETED">COMPLETED</option>
-				</select>
+					enum-class="\App\Enums\TaskStatus" 
+					:selected="old('status', '')"
+				/>
 
 				@error('status')
 					<div class="invalid-feedback">
@@ -60,21 +57,23 @@
 			</div>
 			<div class="mb-3">
 				<label class="form-label">Priority</label>
-				<select 
-					name="status" 
-					class="form-select @error('priority') is-invalid @enderror"
-				>
-					<option value="">Select priority</option>
-					<option value="LOW">LOW</option>
-					<option value="MEDIUM">MEDIUM</option>
-					<option value="HIGH">HIGH</option>
-				</select>
+				<x-dropdown 
+					label="Priority" 
+					name="priority" 
+					enum-class="\App\Enums\TaskPriority" 
+					:selected="old('priority', '')"
+				/>
 
 				@error('priority')
 					<div class="invalid-feedback">
 						{{ $message }}
 					</div>
 				@enderror
+			</div>
+			<div class="mb-3">
+				<button type="submit" class="btn btn-primary">
+					Submit
+				</button>
 			</div>
 		</form>
 	</div>

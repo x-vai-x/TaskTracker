@@ -15,7 +15,7 @@ class CreateTaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,7 +26,7 @@ class CreateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'title' => 'required|string|unique|max:255',
+			'title' => 'required|string|max:255',
             'description' => 'nullable|string',
 			'priority' => new Enum(TaskPriority::class),
 			'status' => new Enum(TaskStatus::class),

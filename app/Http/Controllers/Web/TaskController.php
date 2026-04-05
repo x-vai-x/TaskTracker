@@ -10,10 +10,10 @@ use Exception;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index($success = -1, $message = "")
     {
 		$tasks = Task::all();
-        return view('tasks.index', compact('tasks'));
+        return view('tasks.index', compact('tasks', 'success', 'message'));
     }
 
 	public function new() 
@@ -23,58 +23,44 @@ class TaskController extends Controller
 
 	public function create(CreateTaskRequest $request)
     {
-        $created = Task::create($request->all());
-		if ($created) {
-        	return redirect()
-				->route(
-					'web.tasks.index', 
-					[
-						"method" => "create",
-						"success" => true
-					], 
-					201
-				);
+		try {
+			Task::create($request->all());
+        
+			return $this->redirectToIndex(
+				1, 
+				"Task created.",
+				201
+			);
 		}
-		else {
-			return redirect()
-				->route(
-					'web.tasks.index', 
-					[
-						"method" => "create",
-						"success" => false
-					], 
-					500
-				);
+		catch (Exception $e) {
+			return $this->redirectToIndex(
+				0, 
+				"Task could not be created"
+			);
 		}
     }
 
 	public function update(UpdateTaskRequest $request) 
 	{
 		try {
-			$updated = Task::where('id', $request->input('id'))
+			Task::where('id', $request->input('id'))
 				->updateOrFail($request->all());
-			return redirect()
-				->route(
-					'web.tasks.index', 
-					[
-						"method" => "update",
-						"success" => $updated
-					], 
-					200
-			);
-		}
-		catch (Exception $e) {
-			return redirect()
-				->route(
-					'web.tasks.index', 
-					[
-						"method" => "update",
-						"success" => false,
-						"error" => $e->getMessage()
-					], 
-					500
+				return $this->redirectToIndex(
+					1, 
+					"Task updated."
 				);
 		}
+		catch (Exception $e) {
+			return $this->redirectToIndex(
+				0, 
+				"Task could not be updated."
+			);
+		}
 
+	}
+
+	private function redirectToIndex(bool $success, string $message, int $statusCode = 0) {
+		$routeName = "web.tasks.index";
+		return parent::redirectRequest($success, $message, $statusCode, $routeName);
 	}
 }
