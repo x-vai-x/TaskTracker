@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Closure;
+use Date;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -12,6 +13,8 @@ class TaskForm extends Component
 	public string $description;
 	public string $status;
 	public string $priority;
+
+	public Date $dueDate;
 	public string $method;
 
 	/** 
@@ -19,14 +22,16 @@ class TaskForm extends Component
 	* @param string $description
 	* @param string $status
 	* @param string $priority
+	* @param Date $dueDate
 	* @param string $method
 	*/
-   public function __construct(string $method="create", string $title = "", string $description = "", string $status = "", string $priority = "")
+   public function __construct(string $method="create", string $title = "", string $description = "", string $status = "", string $priority = "", Date $dueDate = null)
    {
 	   $this->title = $title;
 	   $this->description = $description;
 	   $this->status = $status;
 	   $this->priority = $priority;
+	   $this->dueDate = $dueDate;
 	   $this->method = $method;
    }
 

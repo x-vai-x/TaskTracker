@@ -6,11 +6,11 @@ use Illuminate\View\Component;
 
 class Alert extends Component
 {
-    public $type;
+    public $alertType;
 
     public function __construct($type = 'info')
     {
-        $this->type = $type;
+        $this->alertType = $type;
     }
 
     public function render()

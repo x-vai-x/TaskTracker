@@ -16,12 +16,11 @@
 	@endif
 </header>
 <main>
-	<div>
+	<div class="d-flex flex-row justify-content-center mt-3">
 		@forelse ($tasks as $task)
-			<x-task-card>
-				<p>{{ $task['title'] }}</p>
-				<p>{{ $task['description'] }}</p>
-			</x-task-card>
+			<div>
+				<x-task-card :task=$task />
+			</div>
 			@empty
 				<x-alert type="info">No tasks found.</x-alert>
 		@endforelse

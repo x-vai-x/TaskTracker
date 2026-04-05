@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class TaskCard extends Component
 {
+	public $task;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($task)
     {
-        //
+        $this->task = $task;
     }
 
     /**
