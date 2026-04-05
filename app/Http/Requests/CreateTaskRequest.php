@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\TaskStatus;
+use App\Enums\TaskPriority;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
@@ -27,7 +28,7 @@ class CreateTaskRequest extends FormRequest
         return [
 			'title' => 'required|string|unique|max:255',
             'description' => 'nullable|string',
-			'priority' => 'nullable|string',
+			'priority' => new Enum(TaskPriority::class),
 			'status' => new Enum(TaskStatus::class),
             'due_date' => 'nullable|date',
         ];
