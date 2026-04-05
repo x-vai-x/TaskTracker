@@ -9,7 +9,8 @@
 <div>
 @forelse ($tasks as $task)
         <x-task-card>
-		{{ $task['title'] }}
+			<p>{{ $task['title'] }}</p>
+			<p>{{ $task['description'] }}</p>
 		</x-task-card>
     @empty
         <x-alert type="info">No tasks found.</x-alert>
