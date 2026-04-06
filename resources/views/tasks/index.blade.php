@@ -16,9 +16,9 @@
 	@endif
 </header>
 <main>
-	<div class="d-flex flex-row justify-content-center mt-3">
-		@forelse ($tasks as $i => $task)
-			<div class="{{ $i % 3 === 0 ? 'bg-gray-200': '' }}">
+	<div class="d-flex flex-row justify-content-between gap-1 mt-3 flex-wrap w-100">
+		@forelse ($tasks as $task)
+			<div class="w-45">
 				<x-task-card :task=$task />
 			</div>
 			@empty
