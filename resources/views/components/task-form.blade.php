@@ -68,7 +68,7 @@
             type="date" 
             name="due_date" 
             class="form-control @error('due_date') is-invalid @enderror"
-            value="{{ $due_date }}"
+            value="{{ $dueDate }}"
         >
         @error('due_date')
             <div class="invalid-feedback">{{ $message }}</div>

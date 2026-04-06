@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
@@ -10,9 +11,11 @@ use Exception;
 
 class TaskController extends Controller
 {
-    public function index($success = -1, $message = "")
+    public function index(FormRequest $request)
     {
 		$tasks = Task::all();
+		$success = $request->query('success');
+		$message = $request->query('message');
         return view('tasks.index', compact('tasks', 'success', 'message'));
     }
 

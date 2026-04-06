@@ -14,7 +14,7 @@ class TaskForm extends Component
 	public string $status;
 	public string $priority;
 
-	public Date $dueDate;
+	public ?Date $dueDate;
 	public string $method;
 
 	/** 
@@ -25,7 +25,7 @@ class TaskForm extends Component
 	* @param Date $dueDate
 	* @param string $method
 	*/
-   public function __construct(string $method="create", string $title = "", string $description = "", string $status = "", string $priority = "", Date $dueDate = null)
+   public function __construct(string $method="create", string $title = "", string $description = "", string $status = "", string $priority = "", ?Date $dueDate = null)
    {
 	   $this->title = $title;
 	   $this->description = $description;
