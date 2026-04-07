@@ -9,30 +9,30 @@ use Illuminate\View\Component;
 
 class TaskForm extends Component
 {
-	public string $title;
-	public string $description;
-	public string $status;
-	public string $priority;
+	public ?string $title;
+	public ?string $description;
+	public ?string $status;
+	public ?string $priority;
 
-	public ?Date $dueDate;
-	public string $method;
+	public ?string $dueDate;
+	public ?string $routeName;
 
 	/** 
 	* @param string $title
 	* @param string $description
 	* @param string $status
 	* @param string $priority
-	* @param Date $dueDate
-	* @param string $method
+	* @param string $dueDate
+	* @param string $routeName
 	*/
-   public function __construct(string $method="create", string $title = "", string $description = "", string $status = "", string $priority = "", ?Date $dueDate = null)
+   public function __construct(?string $title = "", ?string $description = "", ?string $status = "", ?string $priority = "", ?string $dueDate = null, string $routeName)
    {
 	   $this->title = $title;
 	   $this->description = $description;
 	   $this->status = $status;
 	   $this->priority = $priority;
 	   $this->dueDate = $dueDate;
-	   $this->method = $method;
+	   $this->routeName = $routeName;
    }
 
     /**

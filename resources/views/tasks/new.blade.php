@@ -7,6 +7,6 @@
 </header>
 <main>
 	<div>
-		<x-task-form />
+		<x-task-form routeName="web.tasks.create" />
 	</div>
 </main>

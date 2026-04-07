@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('web.tasks.' . $method) }}">
+<form method="POST" :action=$routeName>
 	<div class="mb-3">
 		<label class="form-label">Title</label>
 		<input 
