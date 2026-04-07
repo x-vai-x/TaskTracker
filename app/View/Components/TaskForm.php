@@ -15,7 +15,9 @@ class TaskForm extends Component
 	public ?string $priority;
 
 	public ?string $dueDate;
-	public ?string $routeName;
+	public string $routeName;
+
+	public string $routeMethod;
 
 	/** 
 	* @param string $title
@@ -25,7 +27,7 @@ class TaskForm extends Component
 	* @param string $dueDate
 	* @param string $routeName
 	*/
-   public function __construct(?string $title = "", ?string $description = "", ?string $status = "", ?string $priority = "", ?string $dueDate = null, string $routeName)
+   public function __construct(?string $title = "", ?string $description = "", ?string $status = "", ?string $priority = "", ?string $dueDate = null, string $routeName, string $routeMethod)
    {
 	   $this->title = $title;
 	   $this->description = $description;
@@ -33,6 +35,7 @@ class TaskForm extends Component
 	   $this->priority = $priority;
 	   $this->dueDate = $dueDate;
 	   $this->routeName = $routeName;
+	   $this->routeMethod = $routeMethod;
    }
 
     /**

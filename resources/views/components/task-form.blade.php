@@ -1,6 +1,6 @@
 <form 
 	@if (str_starts_with($routeName, 'web.'))
-		method="POST" :action=$routeName
+		method={{ $routeMethod }} action={{ route($routeName) }}
 	@endif
 >
 	<div class="mb-3">
