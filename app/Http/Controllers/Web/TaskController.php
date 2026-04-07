@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\CreateTaskRequest;
-use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use Exception;
 
@@ -42,25 +41,6 @@ class TaskController extends Controller
 			);
 		}
     }
-
-	public function update(UpdateTaskRequest $request) 
-	{
-		try {
-			Task::where('id', $request->input('id'))
-				->updateOrFail($request->all());
-				return $this->redirectToIndex(
-					1, 
-					"Task updated."
-				);
-		}
-		catch (Exception $e) {
-			return $this->redirectToIndex(
-				0, 
-				"Task could not be updated."
-			);
-		}
-
-	}
 
 	private function redirectToIndex(bool $success, string $message, int $statusCode = 0) {
 		$routeName = "web.tasks.index";

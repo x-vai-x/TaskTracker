@@ -15,41 +15,19 @@ class TaskController extends Controller
         return response()->json(Task::all());
     }
 
-    public function create(CreateTaskRequest $request)
-    {
-        $created = Task::create($request->all());
-		if ($created) {
-        	return redirect()->route('api.tasks.index', [], 201);
-		}
-		else {
-			return redirect()->route('api.tasks.index', [], 500);
-		}
-    }
-
     public function update(UpdateTaskRequest $request)
     {
 		try {
-			$updated = Task::where('id', $request->input('id'))
+			Task::where('id', $request->input('id'))
 				->updateOrFail($request->all());
-			return redirect()
-				->route(
-					'api.tasks.index', 
-					["updateSuccess" => $updated], 
-					200
-			);
+			return $this->redirectToIndex(1, 'Task updated.', 201);
 		}
 		catch (Exception $e) {
-			return redirect()
-				->route(
-					'api.tasks.index', 
-					[
-						"updateSuccess" => false,
-						"updateError" => $e->getMessage()
-					], 
-					500
-				);
+			return $this->redirectToIndex(0, 'Task could not be updated.');
 		}
-       
-
     }
+	private function redirectToIndex(bool $success, string $message, int $statusCode = 0) {
+		$routeName = "api.tasks.index";
+		return parent::redirectRequest($success, $message, $statusCode, $routeName);
+	}
 }

@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Arr;
+@endphp
+<div id="modal-alert"></div>
 <form 
 	@if (str_starts_with($routeName, 'web.'))
 		method={{ $routeMethod }} action={{ route($routeName) }}
@@ -12,7 +16,7 @@
 			required
 			maxlength="255"
 			placeholder="Enter task title"
-			value="{{ $title }}"
+			value="{{ Arr::get($task, 'title', '')}}"
 		>
 
 		@error('title')
@@ -28,7 +32,7 @@
 			class="form-control @error('description') is-invalid @enderror"
 			rows="4"
 			placeholder="Enter description"
-		>{{ $description }}</textarea>
+		>{{ Arr::get($task, 'description', '') }}</textarea>
 
 		@error('description')
 			<div class="invalid-feedback">
@@ -42,7 +46,7 @@
 			label="Status" 
 			name="status" 
 			enum-class="\App\Enums\TaskStatus" 
-			selected="{{ $status }}"
+			selected="{{ Arr::get($task, 'status', '') }}"
 		/>
 
 		@error('status')
@@ -57,7 +61,7 @@
 			label="Priority" 
 			name="priority" 
 			enum-class="\App\Enums\TaskPriority" 
-			selected="{{ $priority }}"
+			selected="{{ Arr::get($task, 'priority', '') }}"
 		/>
 
 		@error('priority')
@@ -72,7 +76,7 @@
             type="date" 
             name="due_date" 
             class="form-control @error('due_date') is-invalid @enderror"
-            value="{{ $dueDate }}"
+            value="{{ Arr::get($task, 'due_date') }}"
         >
         @error('due_date')
             <div class="invalid-feedback">{{ $message }}</div>
@@ -85,3 +89,47 @@
 		</button>
 	</div>
 </form>
+
+<script>
+	(function(){
+		$('form').on('submit', async function() {
+			if ("<?php !str_starts_with($routeName, 'api.' )?>") {
+				return;
+			}
+			event.preventDefault();
+			await callAPI($this);
+		});
+		async function callAPI($formEl) {
+			let bodyData = {
+				...new FormData($formEl),
+				id: "{{ Arr::get($task, 'id') }}"
+			};
+			try {
+				let res = await fetch("{{ route($routeName) }}", {
+					method: "{{ $routeMethod }}",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: bodyData
+				});
+				let json = res.json();
+				if (json["success"]) {
+					$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'success']) }}", function() {
+						$('#modal-alert .alert').append(json['message']);
+					});
+				}
+				else {
+					$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger']) }}", function() {
+						$('#modal-alert .alert').append(json['message']);
+					});
+					
+				}
+			}
+			catch (e) {
+				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger']) }}", function() {
+					$('#modal-alert .alert').append('Task could not be updated.');
+				});
+			}
+		}
+	});
+</script>

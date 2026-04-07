@@ -29,5 +29,13 @@
 		<div>
 			<x-edit-btn/>
 		</div>
+		
+		<x-modal-dialog title="Edit task" id="taskModal">
+			<x-task-form 
+				routeMethod="POST" 
+				routeName="api.tasks.update"
+				:task=$task
+			/>
+		</x-modal-dialog>
     </div>
 </div>
