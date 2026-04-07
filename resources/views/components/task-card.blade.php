@@ -1,4 +1,4 @@
-<div class="card mb-5">
+<div class="card">
     <div class="card-body">
 		<div class="mb-2">
 			<h2>

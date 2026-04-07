@@ -18,7 +18,7 @@
 <main>
 	<div class="d-flex flex-row justify-content-between gap-1 mt-3 flex-wrap w-100">
 		@forelse ($tasks as $task)
-			<div class="w-45">
+			<div class="w-45 mb-5">
 				<x-task-card :task=$task />
 			</div>
 			@empty
