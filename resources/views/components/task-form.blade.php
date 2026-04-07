@@ -1,4 +1,8 @@
-<form method="POST" :action=$routeName>
+<form 
+	@if (str_starts_with($routeName, 'web.'))
+		method="POST" :action=$routeName
+	@endif
+>
 	<div class="mb-3">
 		<label class="form-label">Title</label>
 		<input 
