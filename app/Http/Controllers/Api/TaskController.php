@@ -20,14 +20,10 @@ class TaskController extends Controller
 		try {
 			Task::where('id', $request->input('id'))
 				->updateOrFail($request->all());
-			return $this->redirectToIndex(1, 'Task updated.', 201);
+			return response()->json(['success' => 1, 'message' => 'Task updated.']);
 		}
 		catch (Exception $e) {
-			return $this->redirectToIndex(0, 'Task could not be updated.');
+			return response()->json(['success' => 0, 'message' => 'Task could not be updated.']);
 		}
     }
-	private function redirectToIndex(bool $success, string $message, int $statusCode = 0) {
-		$routeName = "api.tasks.index";
-		return parent::redirectRequest($success, $message, $statusCode, $routeName);
-	}
 }

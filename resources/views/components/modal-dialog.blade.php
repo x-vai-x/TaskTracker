@@ -1,3 +1,6 @@
+@extends('layouts.app')
+@section('content')
+
 <div class="modal fade" id="{{ $id }}" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
