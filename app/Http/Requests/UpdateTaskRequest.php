@@ -12,7 +12,7 @@ class UpdateTaskRequest extends CreateTaskRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**

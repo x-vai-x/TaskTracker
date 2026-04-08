@@ -1,3 +1,7 @@
+
+@extends('layouts.app')
+@section('content')
+
 @php
     use Illuminate\Support\Arr;
 @endphp
@@ -89,15 +93,15 @@
 		</button>
 	</div>
 </form>
-
+<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-	(function(){
-		$('form').on('submit', async function() {
+	$(document).ready(function() {
+		$('form').on('submit', async function(event) {
 			if ("<?php !str_starts_with($routeName, 'api.' )?>") {
 				return;
 			}
 			event.preventDefault();
-			await callAPI($this);
+			await callAPI(this);
 		});
 		async function callAPI($formEl) {
 			let bodyData = {
@@ -112,7 +116,7 @@
 					},
 					body: bodyData
 				});
-				let json = res.json();
+				let json = await (res).json();
 				if (json["success"]) {
 					$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'success']) }}", function() {
 						$('#modal-alert .alert').append(json['message']);
