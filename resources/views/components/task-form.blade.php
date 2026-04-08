@@ -1,7 +1,4 @@
 
-@extends('layouts.app')
-@section('content')
-
 @php
     use Illuminate\Support\Arr;
 @endphp
