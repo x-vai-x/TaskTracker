@@ -111,18 +111,14 @@
 					method: "{{ $routeMethod }}",
 					body: bodyData
 				});	
+			
 			}
 			catch (e) {
 				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}");
 				return;
 			}
-			
+		
 			let json = await res.json();
-
-			if (typeof json === 'undefined' 
-				|| !('success' in json)) {
-				return;
-			}
 
 			if (json['success']) {
 				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'success', 'message' => 'Task updated.']) }}");

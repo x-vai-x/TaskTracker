@@ -2,6 +2,11 @@
 
 namespace App\Http\Requests;
 
+<<<<<<< HEAD
+=======
+use App\Http\Requests\CreateTaskRequest;
+
+>>>>>>> a1a386e (works)
 
 class UpdateTaskRequest extends CreateTaskRequest
 {
