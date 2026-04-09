@@ -6,6 +6,8 @@
 <form 
 	@if (str_starts_with($routeName, 'web.'))
 		method={{ $routeMethod }} action={{ route($routeName) }}
+	@else
+		id="form-edit-task-{{ $task['id'] }}"
 	@endif
 >
 	<div class="mb-3">
@@ -93,7 +95,7 @@
 <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('form').on('submit', async function(event) {
+		$('#form-edit-task-{{ $task['id'] }}').on('submit', async function(event) {
 			if ("<?php !str_starts_with($routeName, 'api.' )?>") {
 				return;
 			}
@@ -111,7 +113,10 @@
 				});	
 			}
 			catch (e) {
-				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger']) }}", function() {
+				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger']) }}", function(response, status, xhr) {
+					if (status === "error") {
+						console.error("Load failed:", xhr.status, xhr.statusText);
+					}
 					$('#modal-alert .alert').append('Task could not be updated.');
 				});
 			}
