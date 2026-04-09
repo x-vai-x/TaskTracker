@@ -119,9 +119,18 @@
 				return;
 			}
 			let json = res.json();
-			let alertType = json['success'] ? 'success' : 'danger';
-		
-			$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => alertType]) }}", function() {
+			if (json['success']) {
+				@php
+					$alertType = 'success';
+				@endphp
+			}
+			else {
+				@php
+					$alertType = 'danger';
+				@endphp
+			}
+
+			$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => $alertType]) }}", function() {
 				$('#modal-alert .alert').append(json['message']);
 			});
 		}
