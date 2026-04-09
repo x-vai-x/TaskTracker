@@ -18,9 +18,9 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request)
     {
 		try {
-			$updatedRows = Task::where('id', $request->input('id'))
-				->firstOrFail()
-				->update($request->validated());
+			$task = Task::where('id', $request->input('id'))
+				->firstOrFail();
+			$updatedRows = $task->update($request->validated());
 			$success = $updatedRows === 1 ? 1 : 0;
 			
 			return response()->json(['success' => $success]);
