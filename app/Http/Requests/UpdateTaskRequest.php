@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateTaskRequest extends CreateTaskRequest
 {
@@ -17,7 +15,7 @@ class UpdateTaskRequest extends CreateTaskRequest
     public function rules(): array
     {
         return [
-			...$this->rules(),
+			...parent::rules(),
 			'id' => 'required|integer|exists:tasks,id'
         ];
     }

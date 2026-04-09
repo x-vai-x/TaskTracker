@@ -104,7 +104,7 @@
 		});
 		async function callAPI($formEl) {
 			let bodyData = new FormData($formEl);
-			bodyData.append('id',"{{ Arr::get($task, 'id') }}");
+			bodyData.append('id', "{{ Arr::get($task, 'id') }}");
 			let res = undefined;
 			try {
 				res = await fetch("{{ route($routeName) }}", {
@@ -113,25 +113,22 @@
 				});	
 			}
 			catch (e) {
-				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}", function() {
-					
-				});
+				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}");
 				return;
 			}
-			if (typeof res === 'undefined') {
+			
+			let json = await res.json();
+
+			if (typeof json === 'undefined' 
+				|| !('success' in json)) {
 				return;
 			}
-			let json = res.json();
 
 			if (json['success']) {
-				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'success', 'message' => 'Task updated.']) }}", function() {
-					
-				});
+				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'success', 'message' => 'Task updated.']) }}");
 			}
 			else {
-				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}", function() {
-					
-				});
+				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}");
 			}
 		}
 	});

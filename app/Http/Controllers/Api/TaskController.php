@@ -20,8 +20,7 @@ class TaskController extends Controller
 		try {
 			$task = Task::where('id', $request->input('id'))
 				->firstOrFail();
-			$updatedRows = $task->update($request->validated());
-			$success = $updatedRows === 1 ? 1 : 0;
+			$success = $task->update($request->validated());
 			
 			return response()->json(['success' => $success]);
 		}
