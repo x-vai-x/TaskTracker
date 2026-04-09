@@ -9,9 +9,7 @@ use App\Models\Task;
 class TaskSeeder extends Seeder
 {
 	use WithoutModelEvents;
-    /**
-     * Run the database seeds.
-     */
+  
     public function run(): void
     {
 		Task::factory()->create([

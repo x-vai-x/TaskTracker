@@ -108,25 +108,22 @@
 				res = await fetch("{{ route($routeName) }}", {
 					method: "{{ $routeMethod }}",
 					body: bodyData
-				});
-				
+				});	
 			}
 			catch (e) {
 				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger']) }}", function() {
 					$('#modal-alert .alert').append('Task could not be updated.');
 				});
 			}
+			if (typeof res === 'undefined') {
+				return;
+			}
 			let json = res.json();
-			if (json["success"]) {
-				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'success']) }}", function() {
-					$('#modal-alert .alert').append(json['message']);
-				});
-			}
-			else {
-				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger']) }}", function() {
-					$('#modal-alert .alert').append(json['message']);
-				});	
-			}
-	}
+			let alertType = json['success'] ? 'success' : 'danger';
+		
+			$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => alertType]) }}", function() {
+				$('#modal-alert .alert').append(json['message']);
+			});
+		}
 	});
 </script>

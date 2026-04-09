@@ -9,9 +9,7 @@ use Illuminate\View\Component;
 class TaskStatus extends Component
 {
 	public string $alertType = "";
-    /**
-     * Create a new component instance.
-     */
+  
 	public function __construct(string $status)
     {
         switch ($status) {

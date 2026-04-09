@@ -13,14 +13,7 @@ class Dropdown extends Component
     public $name;
     public $options;
     public $selected;
-    /**
-     * Create a new component instance.
-     *
-     * @param string $label
-     * @param string $name
-     * @param string|null $enumClass Fully qualified Enum class name
-     * @param mixed $selected
-     */
+
     public function __construct($label, $name, $enumClass = null, $selected = null)
     {
         $this->label = $label;
@@ -28,15 +21,13 @@ class Dropdown extends Component
         $this->selected = $selected;
 
         if ($enumClass && is_subclass_of($enumClass, UnitEnum::class)) {
-            // Generate options from enum cases
+           
             $this->options = $enumClass::cases();
         } else {
-            $this->options = []; // fallback empty
+            $this->options = []; 
         }
     }
-    /**
-     * Get the view / contents that represent the component.
-     */
+   
     public function render(): View|Closure|string
     {
         return view('components.dropdown');

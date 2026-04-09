@@ -9,9 +9,7 @@ use Illuminate\View\Component;
 class TaskPriority extends Component
 {
 	public string $alertType = "";
-    /**
-     * Create a new component instance.
-     */
+
     public function __construct(string $priority)
     {
         switch ($priority) {

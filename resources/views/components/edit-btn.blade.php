@@ -2,7 +2,7 @@
 	type="button" 
 	class="btn btn-secondary" 
 	data-bs-toggle="modal" 
-    data-bs-target="#taskModal"
+    data-bs-target="#taskModal-{{ $id }}"
 >
 	<i class="bi bi-pen"></i>
 </button>

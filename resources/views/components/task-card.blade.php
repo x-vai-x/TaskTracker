@@ -27,10 +27,10 @@
 			</x-task-status>
 		</div>
 		<div>
-			<x-edit-btn/>
+			<x-edit-btn id="{{ $task['id'] }}"/>
 		</div>
 		
-		<x-modal-dialog title="Edit task" id="taskModal">
+		<x-modal-dialog title="Edit task" id="taskModal-{{ $task['id'] }}">
 			<x-task-form 
 				routeMethod="POST" 
 				routeName="api.tasks.update"
