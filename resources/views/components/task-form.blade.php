@@ -116,12 +116,12 @@
 				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}", function() {
 					
 				});
+				return;
 			}
 			if (typeof res === 'undefined') {
 				return;
 			}
 			let json = res.json();
-			
 
 			if (json['success']) {
 				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'success', 'message' => 'Task updated.']) }}", function() {

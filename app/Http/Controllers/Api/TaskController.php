@@ -18,12 +18,15 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request)
     {
 		try {
-			Task::where('id', $request->input('id'))
-				->updateOrFail($request->all());
-			return response()->json(['success' => 1, 'message' => 'Task updated.']);
+			$updatedRows = Task::where('id', $request->input('id'))
+				->firstOrFail()
+				->update($request->validated());
+			$success = $updatedRows === 1 ? 1 : 0;
+			
+			return response()->json(['success' => $success]);
 		}
 		catch (Exception $e) {
-			return response()->json(['success' => 0, 'message' => 'Task could not be updated.']);
+			return response()->json(['success' => 0]);
 		}
     }
 }
