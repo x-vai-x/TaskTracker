@@ -6,9 +6,9 @@ use Illuminate\View\Component;
 
 class Alert extends Component
 {
-    public $alertType;
+    public string $alertType;
 
-    public function __construct($type = 'info')
+    public function __construct(string $type = 'info')
     {
         $this->alertType = $type;
     }
