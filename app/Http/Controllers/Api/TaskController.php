@@ -7,6 +7,7 @@ use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use Exception;
+use Illuminate\Foundation\Http\FormRequest;
 
 class TaskController extends Controller
 {
@@ -20,8 +21,7 @@ class TaskController extends Controller
 		try {
 			$task = Task::where('id', $request->input('id'))
 				->firstOrFail();
-			$updatedRows = $task->update($request->validated());
-			$success = $updatedRows === 1 ? 1 : 0;
+			$success = $task->update($request->all());
 			
 			return response()->json(['success' => $success]);
 		}
