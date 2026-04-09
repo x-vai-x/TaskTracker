@@ -20,7 +20,7 @@ class TaskController extends Controller
 		try {
 			$task = Task::where('id', $request->input('id'))
 				->firstOrFail();
-			$success = $task->update($request->all());
+			$success = $task->updateOrFail($request->all());
 			
 			return response()->json(['success' => $success]);
 		}
