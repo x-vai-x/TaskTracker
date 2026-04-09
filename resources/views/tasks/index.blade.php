@@ -12,7 +12,7 @@
     
 	@endphp
 	@if ($alertType)
-		<x-alert type="{{ $alertType }}">{{ $message }}</x-alert>
+		<x-alert alertType="{{ $alertType }}">{{ $message }}</x-alert>
 	@endif
 </header>
 <main>
@@ -22,7 +22,7 @@
 				<x-task-card :task=$task />
 			</div>
 			@empty
-				<x-alert type="info">No tasks found.</x-alert>
+				<x-alert alertType="info">No tasks found.</x-alert>
 		@endforelse
 	</div>
 </main>

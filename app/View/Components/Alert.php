@@ -8,9 +8,9 @@ class Alert extends Component
 {
     public string $alertType;
 
-    public function __construct(string $type = 'info')
+    public function __construct(string $alertType = 'info')
     {
-        $this->alertType = $type;
+        $this->alertType = $alertType;
     }
 
     public function render()
