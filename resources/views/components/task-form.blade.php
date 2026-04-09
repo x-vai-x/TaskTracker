@@ -113,31 +113,26 @@
 				});	
 			}
 			catch (e) {
-				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger']) }}", function(response, status, xhr) {
-					if (status === "error") {
-						console.error("Load failed:", xhr.status, xhr.statusText);
-					}
-					$('#modal-alert .alert').append('Task could not be updated.');
+				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}", function() {
+					
 				});
 			}
 			if (typeof res === 'undefined') {
 				return;
 			}
 			let json = res.json();
+			
+
 			if (json['success']) {
-				@php
-					$alertType = 'success';
-				@endphp
+				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'success', 'message' => 'Task updated.']) }}", function() {
+					
+				});
 			}
 			else {
-				@php
-					$alertType = 'danger';
-				@endphp
+				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}", function() {
+					
+				});
 			}
-
-			$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => $alertType]) }}", function() {
-				$('#modal-alert .alert').append(json['message']);
-			});
 		}
 	});
 </script>

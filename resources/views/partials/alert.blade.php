@@ -1,5 +1,3 @@
 @if ($alertType)
-	<div class="alert alert-{{ $alertType }}" role="alert">
-		{{ $slot }}
-	</div>
+	<x-alert alertType="{{ $alertType }}">{{ $message }}</x-alert>
 @endif
