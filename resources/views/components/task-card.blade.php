@@ -16,22 +16,22 @@
 			</span>
 		</div>
 		<div class="d-flex flex-row gap-3">
-			<x-task-priority  priority="{{ $task['priority'] }}">
-				<div>
-					Priority:
-					<span class="priority">
-					 	{{ $task['priority'] }}
-					 </span>
-				</div>
-			</x-task-priority>
-			<x-task-status status="{{ $task['status'] }}">
-				<div>
-					Status: 
-					<span class="status">
+			<div class="priority">
+				<x-task-priority  priority="{{ $task['priority'] }}">
+					<div>
+						Priority:
+						{{ $task['priority'] }}
+					</div>
+				</x-task-priority>
+			</div>
+			<div class="status">
+				<x-task-status status="{{ $task['status'] }}">
+					<div>
+						Status: 
 						{{ $task['status'] }}
-					</span>
-				</div>
-			</x-task-status>
+					</div>
+				</x-task-status>
+			</div>
 		</div>
 		<div class="mb-2">
 			Due Date:

@@ -133,6 +133,19 @@
 						modal.hide();
 					}, 3000);
 				});
+				$taskCard = $('#task-card-{{ $task['id'] }}');
+				let simpleTaskAttributes = ['title', 'description', 'due_date'];
+				
+				for (let taskAttribute of simpleTaskAttributes) {
+					$taskCard.find('span.' + taskAttribute).html(bodyData.get(taskAttribute));
+				}
+				let baseUrl = '';
+				let url = '';
+				@foreach (['status', 'priority'] as $taskAttribute) 
+					baseUrl = "{{ route('web.partials.' . $taskAttribute, [$taskAttribute => '__VALUE__']) }}";
+					url = baseUrl.replace('__VALUE__', bodyData.get("{{ $taskAttribute }}"));
+					$taskCard.find('div.{{ $taskAttribute }}').load(url);
+				@endforeach
 			}
 			else {
 				$modalAlert.load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}");
