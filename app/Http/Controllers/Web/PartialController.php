@@ -20,9 +20,10 @@ class PartialController extends Controller
 		return view('partials.task-priority', compact('priority', 'alertType'));
 	}
 
-	public function status(string $status) {
+	public function status(string $status, FormRequest $request) {
 		$taskStatus = new TaskStatus($status);
 		$alertType = $taskStatus->alertType;
-		return view('partials.task-status', compact('status', 'alertType'));
+		$correctiveActionNote = $request->query('corrective_action_note');
+		return view('partials.task-status', compact('status', 'correctiveActionNote', 'alertType'));
 	}
 }

@@ -22,6 +22,7 @@ class CreateTaskRequest extends FormRequest
 			'priority' => new Enum(TaskPriority::class),
 			'status' => new Enum(TaskStatus::class),
             'due_date' => 'nullable|date',
+			'corrective_action_note' => 'nullable|string',
         ];
     }
 }

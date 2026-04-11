@@ -45,12 +45,27 @@
 	</div>
 	<div class="mb-3">
 		<label class="form-label">Status</label>
-		<x-dropdown 
-			label="Status" 
-			name="status" 
-			enum-class="\App\Enums\TaskStatus" 
-			selected="{{ Arr::get($task, 'status', '') }}"
-		/>
+		<div class="d-flex flex-row">
+			<div>
+				<x-dropdown 
+					label="Status" 
+					name="status" 
+					enum-class="\App\Enums\TaskStatus" 
+					selected="{{ Arr::get($task, 'status', '') }}"
+				/>
+			</div>
+			<div>
+				<textarea 
+					id="corrective_action_note"
+					name="corrective_action_note" 
+					class="form-control {{ Arr::get($task, 'status', '') == 'NON COMPLIANT' ? '' :'d-none' }}"
+					rows="4"
+					placeholder="Enter correction actions"
+				>
+					{{ Arr::get($task, 'corrective_action_note', '') }}
+				</textarea>
+			</div>
+		</div>
 
 		@error('status')
 			<div class="invalid-feedback">
@@ -106,6 +121,16 @@
 		$('.modal').on('hidden.bs.modal', function () {
 			$('.modal-alert').empty();
 		});
+
+		$('#form-edit-task-{{ $task['id'] }} select#status').on('change', function () {
+			if ($(this).val() == 'NON COMPLIANT') {
+				$('#corrective_action_note').removeClass('d-none');
+			}
+			else {
+				$('#corrective_action_note').addClass('d-none');
+			}
+		});
+
 		async function callAPI($formEl) {
 			$modalAlert = $($formEl).prev('.modal-alert');
 			let bodyData = new FormData($formEl);
@@ -139,12 +164,27 @@
 				for (let taskAttribute of simpleTaskAttributes) {
 					$taskCard.find('span.' + taskAttribute).html(bodyData.get(taskAttribute));
 				}
-				let baseUrl = '';
-				let url = '';
-				@foreach (['status', 'priority'] as $taskAttribute) 
-					baseUrl = "{{ route('web.partials.' . $taskAttribute, [$taskAttribute => '__VALUE__']) }}";
-					url = baseUrl.replace('__VALUE__', bodyData.get("{{ $taskAttribute }}"));
-					$taskCard.find('div.{{ $taskAttribute }}').load(url);
+
+				@foreach ([
+					'status' => [
+						'corrective_action_note'
+					], 
+					'priority'=> []
+				] as $taskAttribute => $queryParams) 
+				{
+					let baseUrl = "{{ route('web.partials.' . $taskAttribute, [$taskAttribute => '__VALUE__']) }}";
+					let taskAttributeValue = bodyData.get("{{ $taskAttribute }}");
+					let url = baseUrl.replace('__VALUE__', encodeURIComponent(taskAttributeValue));
+					url = new URL(url);
+					@foreach ($queryParams as $queryParam) 
+					{
+						let queryParamValue = bodyData.get("{{ $queryParam }}");
+						url.searchParams.append("{{ $queryParam }}", queryParamValue);
+					}
+					@endforeach
+
+					await $taskCard.find('div.{{ $taskAttribute }}').load(url.toString());	
+				}
 				@endforeach
 			}
 			else {

@@ -30,6 +30,12 @@
 						Status: 
 						{{ $task['status'] }}
 					</div>
+					@if ($task['status'] == 'NON COMPLIANT')
+						<div class="bg-white">
+							Corrective action note:
+							{{ $task['corrective_action_note'] }}
+						</div>
+					@endif
 				</x-task-status>
 			</div>
 		</div>
