@@ -2,7 +2,7 @@
 @php
     use Illuminate\Support\Arr;
 @endphp
-<div id="modal-alert"></div>
+<div class="modal-alert"></div>
 <form 
 	@if (str_starts_with($routeName, 'web.'))
 		method={{ $routeMethod }} action={{ route($routeName) }}
@@ -102,7 +102,12 @@
 			event.preventDefault();
 			await callAPI(this);
 		});
+
+		$('.modal').on('hidden.bs.modal', function () {
+			$('.modal-alert').empty();
+		});
 		async function callAPI($formEl) {
+			$modalAlert = $($formEl).prev('.modal-alert');
 			let bodyData = new FormData($formEl);
 			bodyData.append('id', "{{ Arr::get($task, 'id') }}");
 			let res = undefined;
@@ -114,17 +119,23 @@
 			
 			}
 			catch (e) {
-				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}");
+				$modalAlert.load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}");
 				return;
 			}
 		
 			let json = await res.json();
 
 			if (json['success']) {
-				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'success', 'message' => 'Task updated.']) }}");
+				$modalAlert.load("{{ route('web.partials.alert', ['alertType' => 'success', 'message' => 'Task updated.']) }}", function() {
+					setTimeout(function() {
+						$modalEl = $('#taskModal-{{ $task['id'] }}');
+						let modal = bootstrap.Modal.getInstance($modalEl);
+						modal.hide();
+					}, 3000);
+				});
 			}
 			else {
-				$('#modal-alert').load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}");
+				$modalAlert.load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}");
 			}
 		}
 	});
