@@ -23,6 +23,7 @@ class CreateTaskRequest extends FormRequest
 			'status' => new Enum(TaskStatus::class),
             'due_date' => 'nullable|date',
 			'corrective_action_note' => 'nullable|string',
+			'user_id' => 'nullable||integer'
         ];
     }
 }

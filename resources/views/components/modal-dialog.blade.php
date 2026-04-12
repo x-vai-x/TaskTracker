@@ -13,3 +13,9 @@
 		</div>
     </div>
 </div>
+
+<script>
+	$('.modal').on('hidden.bs.modal', function () {
+		$('.modal-alert').empty();
+	});
+</script>

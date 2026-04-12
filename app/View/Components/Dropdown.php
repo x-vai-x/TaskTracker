@@ -14,11 +14,14 @@ class Dropdown extends Component
     public ?array $options;
     public string $selected;
 
-    public function __construct(string $label, string $name, ?array $options = [], $enumClass = null, string $selected = null)
+	public bool $isOptionsArrayAssoc;
+
+    public function __construct(string $label, string $name, ?bool $isOptionsArrayAssoc = false, ?array $options = [], $enumClass = null, string $selected = null)
     {
         $this->label = $label;
         $this->name = $name;
         $this->selected = $selected;
+		$this->isOptionsArrayAssoc = $isOptionsArrayAssoc;
 
         if ($enumClass && is_subclass_of($enumClass, UnitEnum::class)) {
             $this->options = $enumClass::cases();

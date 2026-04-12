@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\CreateTaskRequest;
 use App\Models\Task;
@@ -20,11 +21,13 @@ class TaskController extends Controller
 
 	public function new() 
 	{
-		return view('tasks.new');
+		$users = User::all();
+		return view('tasks.new', compact('users'));
 	}
 
 	public function create(CreateTaskRequest $request)
     {
+
 		try {
 			Task::create($request->all());
         

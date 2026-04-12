@@ -53,6 +53,11 @@
 					enum-class="\App\Enums\TaskStatus" 
 					selected="{{ Arr::get($task, 'status', '') }}"
 				/>
+				@error('status')
+					<div class="invalid-feedback">
+						{{ $message }}
+					</div>
+				@enderror
 			</div>
 			<div>
 				<textarea 
@@ -66,12 +71,6 @@
 				</textarea>
 			</div>
 		</div>
-
-		@error('status')
-			<div class="invalid-feedback">
-				{{ $message }}
-			</div>
-		@enderror
 	</div>
 	<div class="mb-3">
 		<label class="form-label">Priority</label>
@@ -83,6 +82,19 @@
 		/>
 
 		@error('priority')
+			<div class="invalid-feedback">
+				{{ $message }}
+			</div>
+		@enderror
+	</div>
+	<div class="mb-3">
+		<x-dropdown 
+			label="Assigned user" 
+			name="user_id" 
+			:options=$users 
+			selected="{{ Arr::get($task, 'user_id', '') }}"
+		/>
+		@error('user_id')
 			<div class="invalid-feedback">
 				{{ $message }}
 			</div>
@@ -110,86 +122,85 @@
 <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('#form-edit-task-{{ $task['id'] }}').on('submit', async function(event) {
-			if ("<?php !str_starts_with($routeName, 'api.' )?>") {
-				return;
-			}
-			event.preventDefault();
-			await callAPI(this);
-		});
-
-		$('.modal').on('hidden.bs.modal', function () {
-			$('.modal-alert').empty();
-		});
-
-		$('#form-edit-task-{{ $task['id'] }} select#status').on('change', function () {
-			if ($(this).val() == 'NON COMPLIANT') {
-				$('#corrective_action_note').removeClass('d-none');
-			}
-			else {
-				$('#corrective_action_note').addClass('d-none');
-			}
-		});
-
-		async function callAPI($formEl) {
-			$modalAlert = $($formEl).prev('.modal-alert');
-			let bodyData = new FormData($formEl);
-			bodyData.append('id', "{{ Arr::get($task, 'id') }}");
-			let res = undefined;
-			try {
-				res = await fetch("{{ route($routeName) }}", {
-					method: "{{ $routeMethod }}",
-					body: bodyData
-				});	
-			
-			}
-			catch (e) {
-				$modalAlert.load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}");
-				return;
-			}
-		
-			let json = await res.json();
-
-			if (json['success']) {
-				$modalAlert.load("{{ route('web.partials.alert', ['alertType' => 'success', 'message' => 'Task updated.']) }}", function() {
-					setTimeout(function() {
-						$modalEl = $('#taskModal-{{ $task['id'] }}');
-						let modal = bootstrap.Modal.getInstance($modalEl);
-						modal.hide();
-					}, 3000);
-				});
-				$taskCard = $('#task-card-{{ $task['id'] }}');
-				let simpleTaskAttributes = ['title', 'description', 'due_date'];
-				
-				for (let taskAttribute of simpleTaskAttributes) {
-					$taskCard.find('span.' + taskAttribute).html(bodyData.get(taskAttribute));
+	
+		@if (isset($task['id']))
+			$('#form-edit-task-{{ $task['id'] }}').on('submit', async function(event) {
+				if ("<?php !str_starts_with($routeName, 'api.' )?>") {
+					return;
 				}
+				event.preventDefault();
+				await callAPI(this);
+			});
+	
+			$('#form-edit-task-{{ $task['id'] }} select#status').on('change', function () {
+				if ($(this).val() == 'NON COMPLIANT') {
+					$('#corrective_action_note').removeClass('d-none');
+				}
+				else {
+					$('#corrective_action_note').addClass('d-none');
+				}
+			});
 
-				@foreach ([
-					'status' => [
-						'corrective_action_note'
-					], 
-					'priority'=> []
-				] as $taskAttribute => $queryParams) 
-				{
-					let baseUrl = "{{ route('web.partials.' . $taskAttribute, [$taskAttribute => '__VALUE__']) }}";
-					let taskAttributeValue = bodyData.get("{{ $taskAttribute }}");
-					let url = baseUrl.replace('__VALUE__', encodeURIComponent(taskAttributeValue));
-					url = new URL(url);
-					@foreach ($queryParams as $queryParam) 
+			async function callAPI($formEl) {
+				$modalAlert = $($formEl).prev('.modal-alert');
+				let bodyData = new FormData($formEl);
+				bodyData.append('id', "{{ Arr::get($task, 'id') }}");
+				let res = undefined;
+				try {
+					res = await fetch("{{ route($routeName) }}", {
+						method: "{{ $routeMethod }}",
+						body: bodyData
+					});	
+				
+				}
+				catch (e) {
+					$modalAlert.load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}");
+					return;
+				}
+			
+				let json = await res.json();
+
+				if (json['success']) {
+					$modalAlert.load("{{ route('web.partials.alert', ['alertType' => 'success', 'message' => 'Task updated.']) }}", function() {
+						setTimeout(function() {
+							$modalEl = $('#taskModal-{{ $task['id'] }}');
+							let modal = bootstrap.Modal.getInstance($modalEl);
+							modal.hide();
+						}, 3000);
+					});
+					$taskCard = $('#task-card-{{ $task['id'] }}');
+					let simpleTaskAttributes = ['title', 'description', 'due_date'];
+					
+					for (let taskAttribute of simpleTaskAttributes) {
+						$taskCard.find('span.' + taskAttribute).html(bodyData.get(taskAttribute));
+					}
+
+					@foreach ([
+						'status' => [
+							'corrective_action_note'
+						], 
+						'priority'=> []
+					] as $taskAttribute => $queryParams) 
 					{
-						let queryParamValue = bodyData.get("{{ $queryParam }}");
-						url.searchParams.append("{{ $queryParam }}", queryParamValue);
+						let baseUrl = "{{ route('web.partials.' . $taskAttribute, [$taskAttribute => '__VALUE__']) }}";
+						let taskAttributeValue = bodyData.get("{{ $taskAttribute }}");
+						let url = baseUrl.replace('__VALUE__', encodeURIComponent(taskAttributeValue));
+						url = new URL(url);
+						@foreach ($queryParams as $queryParam) 
+						{
+							let queryParamValue = bodyData.get("{{ $queryParam }}");
+							url.searchParams.append("{{ $queryParam }}", queryParamValue);
+						}
+						@endforeach
+
+						await $taskCard.find('div.{{ $taskAttribute }}').load(url.toString());	
 					}
 					@endforeach
-
-					await $taskCard.find('div.{{ $taskAttribute }}').load(url.toString());	
 				}
-				@endforeach
+				else {
+					$modalAlert.load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}");
+				}
 			}
-			else {
-				$modalAlert.load("{{ route('web.partials.alert', ['alertType' => 'danger', 'message' => 'Task could not be updated.']) }}");
-			}
-		}
+		@endif
 	});
 </script>
