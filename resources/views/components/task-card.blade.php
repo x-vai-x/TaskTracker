@@ -40,6 +40,9 @@
 			</div>
 		</div>
 		<div class="mb-2">
+			<x-task-assigned-user user={{ $task['user'] }} />
+		</div>
+		<div class="mb-2">
 			Due Date:
 			<span class="due_date">
 				{{ $task['due_date'] }}

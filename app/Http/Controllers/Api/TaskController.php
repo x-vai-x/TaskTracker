@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use Exception;
-use Illuminate\Foundation\Http\FormRequest;
 
 class TaskController extends Controller
 {

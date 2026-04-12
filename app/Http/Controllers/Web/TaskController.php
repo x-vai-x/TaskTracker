@@ -13,7 +13,7 @@ class TaskController extends Controller
 {
     public function index(FormRequest $request)
     {
-		$tasks = Task::all();
+		$tasks = Task::with('user')->get();
 		$success = $request->query('success', -1);
 		$message = $request->query('message');
         return view('tasks.index', compact('tasks', 'success', 'message'));

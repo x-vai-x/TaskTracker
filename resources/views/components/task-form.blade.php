@@ -92,6 +92,7 @@
 			label="Assigned user" 
 			name="user_id" 
 			:options=$users 
+			isOptionsArrayAssoc
 			selected="{{ Arr::get($task, 'user_id', '') }}"
 		/>
 		@error('user_id')
