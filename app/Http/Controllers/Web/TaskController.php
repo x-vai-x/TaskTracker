@@ -27,7 +27,6 @@ class TaskController extends Controller
 
 	public function create(CreateTaskRequest $request)
     {
-
 		try {
 			Task::create($request->all());
         

@@ -10,11 +10,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class TaskController extends Controller
 {
-    public function index()
-    {
-        return response()->json(Task::all());
-    }
-
     public function update(UpdateTaskRequest $request)
     {
 		try {
