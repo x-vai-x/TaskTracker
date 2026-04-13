@@ -143,6 +143,9 @@
 				$modalAlert = $($formEl).prev('.modal-alert');
 				let bodyData = new FormData($formEl);
 				bodyData.append('id', "{{ Arr::get($task, 'id') }}");
+				if (!bodyData.get("status")) {
+					bodyData.set('status', 'PENDING');
+				}
 				let res = undefined;
 				try {
 					res = await fetch("{{ route($routeName) }}", {
@@ -172,6 +175,8 @@
 					for (let taskAttribute of simpleTaskAttributes) {
 						$taskCard.find('span.' + taskAttribute).html(bodyData.get(taskAttribute));
 					}
+
+					
 
 					@foreach ([
 						'status' => [
