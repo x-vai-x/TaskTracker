@@ -66,9 +66,7 @@
 					class="form-control {{ Arr::get($task, 'status', '') == 'NON COMPLIANT' ? '' :'d-none' }}"
 					rows="4"
 					placeholder="Enter correction actions"
-				>
-					{{ Arr::get($task, 'corrective_action_note', '') }}
-				</textarea>
+				>{{ Arr::get($task, 'corrective_action_note', '') }}</textarea>
 			</div>
 		</div>
 	</div>
@@ -123,7 +121,6 @@
 <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function() {
-	
 		@if (isset($task['id']))
 			$('#form-edit-task-{{ $task['id'] }}').on('submit', async function(event) {
 				if ("<?php !str_starts_with($routeName, 'api.' )?>") {
@@ -184,7 +181,7 @@
 					] as $taskAttribute => $queryParams) 
 					{
 						let baseUrl = "{{ route('web.partials.' . $taskAttribute, [$taskAttribute => '__VALUE__']) }}";
-						let taskAttributeValue = bodyData.get("{{ $taskAttribute }}");
+						let taskAttributeValue = bodyData.get("{{ $taskAttribute }}") ? bodyData.get("{{ $taskAttribute }}") : '{{ $taskAttribute }} not specified';
 						let url = baseUrl.replace('__VALUE__', encodeURIComponent(taskAttributeValue));
 						url = new URL(url);
 						@foreach ($queryParams as $queryParam) 

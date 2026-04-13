@@ -1,6 +1,6 @@
 <x-task-priority priority="{{ $priority }}">
 	<div>
 		Priority:
-		{{ $priority }}
+		{{ $priority ?? 'Priority not specified' }}
 	</div>
 </x-task-priority>

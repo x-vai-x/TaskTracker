@@ -9,8 +9,8 @@ use Illuminate\View\Component;
 
 class TaskAssignedUser extends Component
 {
-    public User $user;
-	public function __construct(User $user)
+    public ?User $user;
+	public function __construct(?User $user)
     {
 		$this->user = $user;
     }

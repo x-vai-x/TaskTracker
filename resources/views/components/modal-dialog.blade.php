@@ -15,7 +15,9 @@
 </div>
 
 <script>
-	$('.modal').on('hidden.bs.modal', function () {
-		$('.modal-alert').empty();
+	$(document).ready(function() {
+		$('.modal').on('hidden.bs.modal', function () {
+			$('.modal-alert').empty();
+		});
 	});
 </script>

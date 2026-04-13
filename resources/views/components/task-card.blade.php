@@ -12,7 +12,7 @@
 		<div class="mb-2">
 			Description: 
 			<span class="description">
-				{{ $task['description'] }}
+				{{ $task['description'] ?? 'No description' }}
 			</span>
 		</div>
 		<div class="d-flex flex-row gap-3">
@@ -20,7 +20,7 @@
 				<x-task-priority  priority="{{ $task['priority'] }}">
 					<div>
 						Priority:
-						{{ $task['priority'] }}
+						{{ $task['priority'] ?? 'Priority not specified' }}
 					</div>
 				</x-task-priority>
 			</div>
@@ -40,12 +40,12 @@
 			</div>
 		</div>
 		<div class="mb-2">
-			<x-task-assigned-user user={{ $task['user'] }} />
+			<x-task-assigned-user :user="$task->user" />
 		</div>
 		<div class="mb-2">
 			Due Date:
 			<span class="due_date">
-				{{ $task['due_date'] }}
+				{{ $task['due_date'] ?? 'No due date' }}
 			</span>
 		</div>
 		<div>

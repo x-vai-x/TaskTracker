@@ -22,6 +22,8 @@ class TaskStatus extends Component
 			case "COMPLETED":
 				$this->alertType = "success";
 				break;
+			default:
+				$this->alertType = "secondary";
 		}
     }
 

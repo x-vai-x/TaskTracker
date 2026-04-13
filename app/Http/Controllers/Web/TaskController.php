@@ -27,6 +27,11 @@ class TaskController extends Controller
 
 	public function create(CreateTaskRequest $request)
     {
+		$request->merge([
+			'status' => $request->input('status') ?: 'PENDING',
+			'priority' => $request->input('priority') ?: null,
+		]);
+
 		try {
 			Task::create($request->all());
         

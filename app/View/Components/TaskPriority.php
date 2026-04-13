@@ -2,8 +2,6 @@
 
 namespace App\View\Components;
 
-use Closure;
-use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class TaskPriority extends Component
@@ -22,6 +20,8 @@ class TaskPriority extends Component
 			case "HIGH":
 				$this->alertType = "warning";
 				break;
+			default:
+				$this->alertType = "secondary";
 		}
     }
 

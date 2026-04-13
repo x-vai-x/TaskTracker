@@ -19,8 +19,8 @@ class CreateTaskRequest extends FormRequest
         return [
 			'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-			'priority' => new Enum(TaskPriority::class),
-			'status' => new Enum(TaskStatus::class),
+			'priority' => ['nullable', new Enum(TaskPriority::class)],
+			'status' => ['nullable', new Enum(TaskStatus::class)],
             'due_date' => 'nullable|date',
 			'corrective_action_note' => 'nullable|string',
 			'user_id' => 'nullable||integer'
