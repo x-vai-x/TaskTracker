@@ -136,6 +136,7 @@
 				}
 				else {
 					$('#corrective_action_note').addClass('d-none');
+					$('#corrective_action_note').text('');
 				}
 			});
 
