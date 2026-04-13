@@ -12,11 +12,11 @@ class Dropdown extends Component
 	public string $label;
     public string $name;
     public ?array $options;
-    public string $selected;
+    public ?string $selected;
 
 	public bool $isOptionsArrayAssoc;
 
-    public function __construct(string $label, string $name, ?bool $isOptionsArrayAssoc = false, ?array $options = [], $enumClass = null, string $selected = null)
+    public function __construct(string $label, string $name, ?bool $isOptionsArrayAssoc = false, ?array $options = [], $enumClass = null, ?string $selected = null)
     {
         $this->label = $label;
         $this->name = $name;

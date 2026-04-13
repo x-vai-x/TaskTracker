@@ -17,4 +17,8 @@ class User extends Model
 	{
 		return $this->hasMany(Task::class);
 	}
+
+	public function formatUser() {
+		return [$this->id => $this->name . ' (' . $this->email . ')'];
+	}
 }

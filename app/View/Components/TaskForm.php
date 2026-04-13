@@ -2,11 +2,9 @@
 
 namespace App\View\Components;
 
-use App\Models\User;
+use App\Helpers\UserHelper;
 use Closure;
-use Date;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class TaskForm extends Component
@@ -23,11 +21,7 @@ class TaskForm extends Component
    {
 		$this->routeName = $routeName;
 		$this->routeMethod = $routeMethod;
-		$this->users = User::all()
-			->mapWithKeys(function (User $user) {
-				return [$user->id => $user->name . ' (' . $user->email . ')'];
-			})
-			->toArray();
+		$this->users = UserHelper::formatUsers();
 	   	$this->task = $task;
    }
 

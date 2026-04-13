@@ -21,13 +21,12 @@ class TaskController extends Controller
 
 	public function new() 
 	{
-		$users = User::all();
-		return view('tasks.new', compact('users'));
+		return view('tasks.new');
 	}
 
 	public function create(CreateTaskRequest $request)
     {
-		$request->merge([
+		$request = $request->merge([
 			'status' => $request->input('status') ?: 'PENDING',
 			'priority' => $request->input('priority') ?: null,
 		]);

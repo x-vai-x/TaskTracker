@@ -12,7 +12,7 @@ class TaskController extends Controller
 {
     public function update(UpdateTaskRequest $request)
     {
-		$request->merge([
+		$request = $request->merge([
 			'status' => $request->input('status') ?: 'PENDING',
 			'priority' => $request->input('priority') ?: null,
 		]);
