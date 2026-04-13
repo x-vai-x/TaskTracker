@@ -12,7 +12,7 @@
 		<div class="mb-2">
 			Description: 
 			<span class="description">
-				{{ $task['description'] ?? 'No description' }}
+				{{ $task['description'] ?? 'No description specified' }}
 			</span>
 		</div>
 		<div class="d-flex flex-row gap-3">
@@ -45,7 +45,7 @@
 		<div class="mb-2">
 			Due Date:
 			<span class="due_date">
-				{{ $task['due_date'] ?? 'No due date' }}
+				{{ $task['due_date'] ?? 'No due date specified' }}
 			</span>
 		</div>
 		<div>

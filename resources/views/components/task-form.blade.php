@@ -173,7 +173,8 @@
 					let simpleTaskAttributes = ['title', 'description', 'due_date'];
 					
 					for (let taskAttribute of simpleTaskAttributes) {
-						$taskCard.find('span.' + taskAttribute).html(bodyData.get(taskAttribute));
+						let attr = bodyData.get(taskAttribute) ? bodyData.get(taskAttribute) : 'No ' + taskAttribute.replace('_', ' ') + ' specified';
+						$taskCard.find('span.' + taskAttribute).html(attr);
 					}
 
 					
