@@ -22,7 +22,7 @@ class CreateTaskRequest extends FormRequest
 			'priority' => ['nullable', new Enum(TaskPriority::class)],
 			'status' => ['nullable', new Enum(TaskStatus::class)],
             'due_date' => 'nullable|date',
-			'corrective_action_note' => 'nullable|string',
+			'corrective_action_note' => 'required_if:status,NON COMPLIANT|nullable|string',
 			'user_id' => 'nullable||integer'
         ];
     }

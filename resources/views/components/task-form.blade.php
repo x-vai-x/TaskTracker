@@ -66,6 +66,7 @@
 					class="form-control {{ Arr::get($task, 'status', '') == 'NON COMPLIANT' ? '' :'d-none' }}"
 					rows="4"
 					placeholder="Enter correction actions"
+					@required($task['status'] === 'NON COMPLIANT')
 				>{{ Arr::get($task, 'corrective_action_note', '') }}</textarea>
 			</div>
 		</div>
@@ -133,10 +134,12 @@
 			$('#form-edit-task-{{ $task['id'] }} select#status').on('change', function () {
 				if ($(this).val() == 'NON COMPLIANT') {
 					$('#corrective_action_note').removeClass('d-none');
+					$('#corrective_action_note').setAttribute('required', 'required');
 				}
 				else {
 					$('#corrective_action_note').addClass('d-none');
 					$('#corrective_action_note').text('');
+					$('#corrective_action_note').removeAttribute('required');
 				}
 			});
 
