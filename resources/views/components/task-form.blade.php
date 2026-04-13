@@ -66,7 +66,7 @@
 					class="form-control {{ Arr::get($task, 'status', '') == 'NON COMPLIANT' ? '' :'d-none' }}"
 					rows="4"
 					placeholder="Enter correction actions"
-					@required($task['status'] === 'NON COMPLIANT')
+					@required(Arr::get($task, 'status') === 'NON COMPLIANT')
 				>{{ Arr::get($task, 'corrective_action_note', '') }}</textarea>
 			</div>
 		</div>
