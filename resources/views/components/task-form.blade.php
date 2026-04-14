@@ -115,7 +115,7 @@
 	
 	<div class="mb-3">
 		<button type="submit" class="btn btn-primary">
-			Submit
+			{{ $task ? 'Update' : 'Create' }}
 		</button>
 	</div>
 </form>

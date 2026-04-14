@@ -1,4 +1,8 @@
-<div class="border rounded-2 pt-1 d-flex flex-row justify-content-around align-items-center w-100" style="height: 100px;">
+<form 
+	action="{{ route('web.tasks.index') }}"
+	method="GET"
+	class="border rounded-2 pt-1 d-flex flex-row justify-content-around align-items-center w-100 overflow-auto" style="height: 100px;"
+>	
 	<div class="d-flex flex-row gap-1 align-items-center h-100 flex-shrink-1">
 		@foreach ($statuses as $status)
 			<x-task-status status="{{ $status}}">
@@ -29,5 +33,7 @@
 			</x-task-due-date-option>
 		@endforeach
 	</div>
-
-</div>
+	<div>
+		<x-search-btn />
+	</div>		
+</form>
