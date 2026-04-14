@@ -15,9 +15,19 @@ class TaskFilterSelection extends Component
 
 	public array $users;
 
-    public function __construct()
+	public array $selectedStatuses;
+	 
+	public array $selectedDueDateOptions;
+
+	public ?string $selectedUserId;
+
+	public function __construct(array $selectedStatuses, array $selectedDueDateOptions, ?string $selectedUserId)
     {
         $this->users = UserHelper::formatUsers();
+
+		$this->selectedStatuses = $selectedStatuses;
+		$this->selectedDueDateOptions = $selectedDueDateOptions;
+		$this->selectedUserId = $selectedUserId;
     }
 
     public function render(): View|Closure|string

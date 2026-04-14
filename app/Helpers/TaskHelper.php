@@ -6,10 +6,10 @@ use App\Models\Task;
 use App\Models\User;
 
 class TaskHelper {
-	public static function filterTasks(int $userId, array $statuses, array $dueDateOptions) {
+	public static function filterTasks(?int $userId, array $statuses, array $dueDateOptions) {
 		$today = now()->startOfDay();
 
-		return $tasks = Task::query()
+		return Task::query()
 			->with('user')
 
 			->when(!empty($statuses), function ($q) use ($statuses) {

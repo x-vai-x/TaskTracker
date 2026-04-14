@@ -7,7 +7,9 @@
 		@foreach ($statuses as $status)
 			<x-task-status status="{{ $status}}">
 				<label>
-					<input type="checkbox" name="statuses[]" value="{{ $status }}">
+					<input type="checkbox" name="statuses[]" value="{{ $status }}"
+						{{ in_array($status, $selectedStatuses) ? 'checked' : '' }}
+					>
 					<span>
 						{{ $status }}
 					</span>
@@ -19,6 +21,7 @@
 			label="Assigned user" 
 			name="user_id" 
 			:options=$users 
+			selected="{{ $selectedUserId }}"
 			isOptionsArrayAssoc
 		/>
 	</div>
@@ -26,7 +29,9 @@
 		@foreach ($dueDateOptions as $dueDateOption)
 			<x-task-due-date-option option="{{ $dueDateOption }}">
 				<label>
-					<input type="checkbox" name="due_date_options[]" value="{{ $dueDateOption }}">
+					<input type="checkbox" name="due_date_options[]" value="{{ $dueDateOption }}"
+						{{ in_array($dueDateOption, $selectedDueDateOptions) ? 'checked' : '' }}
+					>
 					<span>
 						{{ $dueDateOption}}
 					</span>
