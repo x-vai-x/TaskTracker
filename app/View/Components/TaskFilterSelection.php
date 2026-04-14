@@ -11,7 +11,7 @@ class TaskFilterSelection extends Component
 {
 	public array $statuses = ['PENDING', 'COMPLETED', 'NON COMPLIANT'];
 
-	public array $dueDates = ['OVERDUE' => 'danger', 'DUE TODAY' => 'warning'];
+	public array $dueDateOptions = ['OVERDUE', 'DUE TODAY'];
 
 	public array $users;
 
