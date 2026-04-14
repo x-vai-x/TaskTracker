@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Helpers\TaskHelper;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
@@ -13,39 +14,12 @@ class TaskController extends Controller
 {
     public function index(FormRequest $request)
 	{
-		$user_id = $request->query('user_id');
+		$userId = $request->query('user_id');
 		$statuses = (array) $request->query('statuses');
 		$dueDateOptions = array_map('strtoupper', (array) $request->query('due_date_options'));
 		$today = now()->startOfDay();
 
-		$tasks = Task::query()
-			->with('user')
-
-			->when(!empty($statuses), function ($q) use ($statuses) {
-				$q->whereIn('status', $statuses);
-			})
-
-			->when($user_id, function ($q) use ($user_id) {
-				$q->where('user_id', $user_id);
-			})
-
-			->when(!empty($dueDateOptions), function ($q) use ($dueDateOptions, $today) {
-
-				$q->where(function ($query) use ($dueDateOptions, $today) {
-
-					if (in_array('DUE TODAY', $dueDateOptions)) {
-						$query->orWhereDate('due_date', $today);
-					}
-
-					if (in_array('OVERDUE', $dueDateOptions)) {
-						$query->orWhere(function ($sub) use ($today) {
-							$sub->whereNotNull('due_date')
-								->whereDate('due_date', '<', $today);
-						});
-					}
-				});
-			})
-			->get();
+		$tasks = TaskHelper::filterTasks($userId, $statuses, $dueDateOptions);
 
 		$success = $request->query('success', -1);
 		$message = $request->query('message');
