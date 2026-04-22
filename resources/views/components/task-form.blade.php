@@ -132,14 +132,18 @@
 			});
 	
 			$('#form-edit-task-{{ $task['id'] }} select#status').on('change', function () {
+				$corrective_action_note_textarea = $(this)
+					.closest('div')
+					.next()
+					.find('textarea');
 				if ($(this).val() == 'NON COMPLIANT') {
-					$('#corrective_action_note').removeClass('d-none');
-					$('#corrective_action_note').setAttribute('required', 'required');
+					$corrective_action_note_textarea.removeClass('d-none');
+					$corrective_action_note_textarea.attr('required', 'required');
 				}
 				else {
-					$('#corrective_action_note').addClass('d-none');
-					$('#corrective_action_note').text('');
-					$('#corrective_action_note').removeAttribute('required');
+					$corrective_action_note_textarea.addClass('d-none');
+					$corrective_action_note_textarea.text('');
+					$corrective_action_note_textarea.removeAttr('required');
 				}
 			});
 
