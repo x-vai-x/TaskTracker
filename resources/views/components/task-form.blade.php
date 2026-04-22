@@ -135,7 +135,7 @@
 				$corrective_action_note_textarea = $(this)
 					.closest('div')
 					.next()
-					.find('textarea');
+					.find('textarea#corrective_action_note');
 				if ($(this).val() == 'NON COMPLIANT') {
 					$corrective_action_note_textarea.removeClass('d-none');
 					$corrective_action_note_textarea.attr('required', 'required');
